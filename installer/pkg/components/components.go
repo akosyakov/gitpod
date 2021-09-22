@@ -12,12 +12,14 @@ import (
 	"github.com/gitpod-io/gitpod/installer/pkg/components/server"
 	wsdaemon "github.com/gitpod-io/gitpod/installer/pkg/components/ws-daemon"
 	wsmanager "github.com/gitpod-io/gitpod/installer/pkg/components/ws-manager"
+	wsmanagerbridge "github.com/gitpod-io/gitpod/installer/pkg/components/ws-manager-bridge"
 	wsproxy "github.com/gitpod-io/gitpod/installer/pkg/components/ws-proxy"
 	wsscheduler "github.com/gitpod-io/gitpod/installer/pkg/components/ws-scheduler"
 )
 
 var MetaObjects = common.CompositeRenderFunc(
 	server.Objects,
+	wsmanagerbridge.Objects,
 )
 
 var WorkspaceObjects = common.CompositeRenderFunc(
