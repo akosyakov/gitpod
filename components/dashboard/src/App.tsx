@@ -34,6 +34,7 @@ const CreateWorkspace = React.lazy(() => import(/* webpackPrefetch: true */ './s
 const NewTeam = React.lazy(() => import(/* webpackPrefetch: true */ './teams/NewTeam'));
 const JoinTeam = React.lazy(() => import(/* webpackPrefetch: true */ './teams/JoinTeam'));
 const Members = React.lazy(() => import(/* webpackPrefetch: true */ './teams/Members'));
+const TeamSettings = React.lazy(() => import(/* webpackPrefetch: true */ './teams/TeamSettings'));
 const NewProject = React.lazy(() => import(/* webpackPrefetch: true */ './projects/NewProject'));
 const ConfigureProject = React.lazy(() => import(/* webpackPrefetch: true */ './projects/ConfigureProject'));
 const Projects = React.lazy(() => import(/* webpackPrefetch: true */ './projects/Projects'));
@@ -284,6 +285,7 @@ function App() {
                     <Route exact path={`/t/${team.slug}`}>
                         <Redirect to={`/t/${team.slug}/workspaces`} />
                     </Route>
+                    <Route exact path={`/t/${team.slug}/settings`} component={TeamSettings}/>
                     <Route exact path={`/t/${team.slug}/:maybeProject/:resourceOrPrebuild?`} render={(props) => {
                         const { maybeProject, resourceOrPrebuild } = props.match.params;
                         if (maybeProject === "projects") {

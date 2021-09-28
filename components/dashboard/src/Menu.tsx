@@ -125,8 +125,7 @@ export default function Menu() {
                 },
                 {
                     title: 'Settings',
-                    link: '/settings',
-                    alternatives: settingsMenu.flatMap(e => e.link)
+                    link: `/t/${team.slug}/settings`,
                 }
             ];
         }
