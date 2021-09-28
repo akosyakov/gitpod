@@ -8,6 +8,7 @@ import (
 	"github.com/gitpod-io/gitpod/installer/pkg/common"
 	agentsmith "github.com/gitpod-io/gitpod/installer/pkg/components/agent-smith"
 	"github.com/gitpod-io/gitpod/installer/pkg/components/gitpod"
+	"github.com/gitpod-io/gitpod/installer/pkg/components/proxy"
 	registryfacade "github.com/gitpod-io/gitpod/installer/pkg/components/registry-facade"
 	"github.com/gitpod-io/gitpod/installer/pkg/components/server"
 	wsdaemon "github.com/gitpod-io/gitpod/installer/pkg/components/ws-daemon"
@@ -18,6 +19,7 @@ import (
 )
 
 var MetaObjects = common.CompositeRenderFunc(
+	proxy.Objects,
 	server.Objects,
 	wsmanagerbridge.Objects,
 )

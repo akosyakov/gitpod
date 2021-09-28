@@ -1,6 +1,7 @@
-package server
+package proxy
 
 import (
+	"fmt"
 	"github.com/gitpod-io/gitpod/installer/pkg/common"
 	networkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -18,7 +19,7 @@ func networkpolicy(ctx *common.RenderContext) ([]runtime.Object, error) {
 	return []runtime.Object{&networkingv1.NetworkPolicy{
 		TypeMeta: common.TypeMetaNetworkPolicy,
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      Component,
+			Name:      fmt.Sprintf("%s-deny-all-allow-explicit", Component),
 			Namespace: ctx.Namespace,
 			Labels:    labels,
 		},
@@ -28,12 +29,10 @@ func networkpolicy(ctx *common.RenderContext) ([]runtime.Object, error) {
 			Ingress: []networkingv1.NetworkPolicyIngressRule{{
 				Ports: []networkingv1.NetworkPolicyPort{{
 					Protocol: common.TCPProtocol,
-					Port:     &intstr.IntOrString{IntVal: ContainerPort},
-				}},
-				From: []networkingv1.NetworkPolicyPeer{{
-					PodSelector: &metav1.LabelSelector{MatchLabels: map[string]string{
-						"component": common.ProxyComponent,
-					}},
+					Port:     &intstr.IntOrString{IntVal: ContainerHTTPPort},
+				}, {
+					Protocol: common.TCPProtocol,
+					Port:     &intstr.IntOrString{IntVal: ContainerHTTPSPort},
 				}},
 			}, {
 				Ports: []networkingv1.NetworkPolicyPort{{
@@ -45,7 +44,7 @@ func networkpolicy(ctx *common.RenderContext) ([]runtime.Object, error) {
 						"chart": common.MonitoringChart,
 					}},
 					PodSelector: &metav1.LabelSelector{MatchLabels: map[string]string{
-						"component": common.ProxyComponent,
+						"component": common.ServerComponent,
 					}},
 				}},
 			}},
