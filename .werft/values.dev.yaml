@@ -32,6 +32,9 @@ resources:
 vsxRegistry:
   proxy: true
 
+log:
+  level: debug
+
 components:
 
   agentSmith:
@@ -49,6 +52,14 @@ components:
     enableLocalApp: true
     oauthServer:
       enabled: true
+    githubApp:
+      enabled: true
+      appId: 141302
+      webhookSecret: supersecret
+      certSecretName: server-github-app-cert
+      certPath: "/github-app-cert/cert"
+      marketplaceName: gitpod-io
+      authProviderId: "Public-GitHub"
     blockNewUsers:
       enabled: true
       passlist:
