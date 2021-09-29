@@ -101,6 +101,7 @@ export interface Team {
     name: string;
     slug: string;
     creationTime: string;
+    softDeleted?: boolean;
     /** This is a flag that triggers the HARD DELETION of this entity */
     deleted?: boolean;
 }
