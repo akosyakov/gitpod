@@ -7,6 +7,7 @@ package components
 import (
 	"github.com/gitpod-io/gitpod/installer/pkg/common"
 	agentsmith "github.com/gitpod-io/gitpod/installer/pkg/components/agent-smith"
+	contentservice "github.com/gitpod-io/gitpod/installer/pkg/components/content-service"
 	"github.com/gitpod-io/gitpod/installer/pkg/components/dashboard"
 	"github.com/gitpod-io/gitpod/installer/pkg/components/gitpod"
 	"github.com/gitpod-io/gitpod/installer/pkg/components/proxy"
@@ -20,6 +21,7 @@ import (
 )
 
 var MetaObjects = common.CompositeRenderFunc(
+	contentservice.Objects,
 	proxy.Objects,
 	dashboard.Objects,
 	server.Objects,
