@@ -1,0 +1,25 @@
+# Copyright (c) 2021 Gitpod GmbH. All rights reserved.
+# Licensed under the MIT License. See License-MIT.txt in the project root for license information.
+
+{{ if not .Values.components.openVsxProxy.disabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.components.openVsxProxy.name }}-config
+  labels:
+    app: {{ template "gitpod.fullname" $ }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  config.json: |
+    {
+      "cache_duration_regular": "1m",
+      "cache_duration_backup": "72h",
+      "url_upstream": "{{ .Values.components.openVsxProxy.vsxRegistryUrl | default "https://open-vsx.org" }}",
+      "url_local": "https://open-vsx.{{ .Values.hostname }}",
+      "max_idle_conns": {{ .Values.components.openVsxProxy.maxIdleConns | default "1000" }},
+      "max_idle_conns_per_host": {{ .Values.components.openVsxProxy.maxIdleConnsPerHost | default "1000" }},
+      "prometheusAddr": "localhost:9500"
+    }
+{{ end }}
