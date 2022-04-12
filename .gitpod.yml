@@ -35,6 +35,10 @@ tasks:
     command: |
       ./dev/preview/download-and-merge-harvester-kubeconfig.sh
       exit 0
+  - name: GoLand indexing
+    init: |
+      ./scripts/goland-indexing.sh
+      ./scripts/goland-latest-indexing.sh
   - name: Java
     init: |
       leeway exec --package components/supervisor-api/java:lib --package components/gitpod-protocol/java:lib -- ./gradlew build
@@ -47,10 +51,6 @@ tasks:
     before: pre-commit install --install-hooks
     init: leeway exec --filter-type go -v -- go mod verify
     openMode: split-right
-  - name: GoLand indexing
-    init: |
-      ./scripts/goland-indexing.sh
-      ./scripts/goland-latest-indexing.sh
 vscode:
   extensions:
     - bradlc.vscode-tailwindcss
