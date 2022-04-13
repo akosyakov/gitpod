@@ -31,26 +31,10 @@ ports:
   # Dev Theia
   - port: 13444
 tasks:
-  - name: Add Harvester kubeconfig
-    command: |
-      ./dev/preview/download-and-merge-harvester-kubeconfig.sh
-      exit 0
   - name: GoLand indexing
     init: |
       ./scripts/goland-indexing.sh
       ./scripts/goland-latest-indexing.sh
-  - name: Java
-    init: |
-      leeway exec --package components/supervisor-api/java:lib --package components/gitpod-protocol/java:lib -- ./gradlew build
-      leeway exec --package components/ide/jetbrains/backend-plugin:plugin -- ./gradlew buildPlugin
-      leeway exec --package components/ide/jetbrains/gateway-plugin:publish -- ./gradlew buildPlugin
-  - name: TypeScript
-    before: scripts/branch-namespace.sh
-    init: yarn --network-timeout 100000 && yarn build
-  - name: Go
-    before: pre-commit install --install-hooks
-    init: leeway exec --filter-type go -v -- go mod verify
-    openMode: split-right
 vscode:
   extensions:
     - bradlc.vscode-tailwindcss
